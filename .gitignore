@@ -1,0 +1,12 @@
+# Documentazione e file interni
+.obsidian/
+DEV-GUIDE.md
+Guida Gestione Hosting Aruba - AstiBlu.it.md
+Guida Gestione Hosting Aruba - AstiBlu.it.pdf
+img-documentation/
+MODULO ISCRIZIONE.pdf
+2026-08-31*
+
+# Secrets (mai committare)
+.env
+www.astiblu.it/contact-config.php
