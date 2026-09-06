@@ -1,0 +1,8 @@
+<?php
+// Copia questo file come contact-config.php e compila i valori reali.
+// contact-config.php NON viene committato su git (vedere .gitignore).
+return [
+    'recaptcha_secret' => 'LA_TUA_RECAPTCHA_V3_SECRET_KEY',
+    'to_email'         => 'info@astiblu.it',
+    'from_email'       => 'noreply@astiblu.it',
+];

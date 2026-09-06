@@ -319,10 +319,14 @@
     <div class="poster__content reveal-left">
       <h2 class="big-text">Mandaci un'email</h2>
       <div class="col reveal">
-        <!-- https://app.formbold.com/forms gestisce il form -->
         <div class="formbold-main-wrapper">
           <div class="formbold-form-wrapper">
-            <form action="https://formbold.com/s/6Qp8o" method="POST">
+            <form id="contact-form" action="contact.php" method="POST" novalidate>
+
+              <!-- Honeypot: campo invisibile, se compilato = bot -->
+              <div style="display:none;" aria-hidden="true">
+                <input type="text" name="website" tabindex="-1" autocomplete="off">
+              </div>
 
               <div class="formbold-mb-5">
                 <label for="name" class="formbold-form-label intro-text">Nome</label>
@@ -348,8 +352,10 @@
                   class="formbold-form-input" required aria-label="Inserisci il tuo messaggio"></textarea>
               </div>
 
+              <div id="contact-feedback" role="alert" aria-live="polite" style="display:none;margin-bottom:1rem;padding:.75rem 1rem;border-radius:6px;font-size:.9rem;"></div>
+
               <div>
-                <button type="submit" class="formbold-btn">Invia</button>
+                <button type="submit" class="formbold-btn" id="contact-submit">Invia</button>
               </div>
             </form>
           </div>
@@ -433,6 +439,61 @@
     integrity="sha512-Nx/M3T/fWprNarYOrnl+gfWZ25YlZtSNmhjHeC0+2gCtyAdDFXqaORJBj1dC427zt3z/HwkUpPX+cxzonjUgrA=="
     crossorigin="anonymous" defer></script>
   <script src="script.js" defer></script>
+
+  <!-- reCAPTCHA v3 — sostituire SITE_KEY con la chiave ottenuta da Google -->
+  <script src="https://www.google.com/recaptcha/api.js?render=6Lf7JK0tAAAAAAz2Y9b2ewxn2qeG3_vF1ZDU3Zn_" defer></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const form = document.getElementById('contact-form');
+      if (!form) return;
+
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        const btn = document.getElementById('contact-submit');
+        const feedback = document.getElementById('contact-feedback');
+
+        btn.disabled = true;
+        btn.textContent = 'Invio in corso...';
+        feedback.style.display = 'none';
+
+        grecaptcha.ready(function () {
+          grecaptcha.execute('6Lf7JK0tAAAAAAz2Y9b2ewxn2qeG3_vF1ZDU3Zn_', { action: 'contact' }).then(function (token) {
+            const data = new FormData(form);
+            data.append('g-recaptcha-response', token);
+
+            fetch('contact.php', { method: 'POST', body: data })
+              .then(r => r.json())
+              .then(res => {
+                if (res.success) {
+                  feedback.style.background = '#d4edda';
+                  feedback.style.color = '#155724';
+                  feedback.style.border = '1px solid #c3e6cb';
+                  feedback.textContent = 'Messaggio inviato! Ti risponderemo al più presto.';
+                  form.reset();
+                } else {
+                  feedback.style.background = '#f8d7da';
+                  feedback.style.color = '#721c24';
+                  feedback.style.border = '1px solid #f5c6cb';
+                  feedback.textContent = res.error || 'Errore imprevisto. Riprova o scrivici su WhatsApp.';
+                }
+                feedback.style.display = 'block';
+              })
+              .catch(() => {
+                feedback.style.background = '#f8d7da';
+                feedback.style.color = '#721c24';
+                feedback.style.border = '1px solid #f5c6cb';
+                feedback.textContent = 'Errore di rete. Riprova o contattaci su WhatsApp.';
+                feedback.style.display = 'block';
+              })
+              .finally(() => {
+                btn.disabled = false;
+                btn.textContent = 'Invia';
+              });
+          });
+        });
+      });
+    });
+  </script>
 </body>
 
 </html>
