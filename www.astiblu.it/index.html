@@ -440,6 +440,18 @@
     crossorigin="anonymous" defer></script>
   <script src="script.js" defer></script>
   <script src="cookie-consent.js"></script>
+  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+  <script>
+    if (window.netlifyIdentity) {
+      window.netlifyIdentity.on('init', function (user) {
+        if (!user) {
+          window.netlifyIdentity.on('login', function () {
+            document.location.href = '/admin/';
+          });
+        }
+      });
+    }
+  </script>
 
   <!-- reCAPTCHA v3 — sostituire SITE_KEY con la chiave ottenuta da Google -->
   <script src="https://www.google.com/recaptcha/api.js?render=6Lf7JK0tAAAAAAz2Y9b2ewxn2qeG3_vF1ZDU3Zn_" defer></script>
