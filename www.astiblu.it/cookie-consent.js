@@ -35,14 +35,38 @@
   function injectStyles() {
     var s = document.createElement('style');
     s.textContent = [
-      '#ab-cookie{position:fixed;bottom:0;left:0;right:0;z-index:99999;background:#0d1b3e;color:#fff;padding:1rem 1.5rem;box-shadow:0 -4px 20px rgba(0,0,0,.4);font-family:Inter,sans-serif;font-size:.875rem;line-height:1.5}',
-      '#ab-cookie-inner{max-width:960px;margin:0 auto;display:flex;align-items:center;gap:1.5rem;flex-wrap:wrap}',
-      '#ab-cookie p{margin:0;flex:1;min-width:200px}',
-      '#ab-cookie a{color:#6eb0ff;text-decoration:underline}',
-      '#ab-cookie-btns{display:flex;gap:.75rem;flex-shrink:0}',
-      '#ab-reject{background:transparent;border:1px solid #666;color:#ccc;padding:.45rem 1.1rem;border-radius:5px;cursor:pointer;font-size:.85rem;transition:border-color .2s,color .2s}',
-      '#ab-reject:hover{border-color:#fff;color:#fff}',
-      '#ab-accept{background:#316bff;border:none;color:#fff;padding:.45rem 1.1rem;border-radius:5px;cursor:pointer;font-size:.85rem;font-weight:600;transition:background .2s}',
+      '@keyframes ab-slidein{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}',
+      '#ab-cookie{',
+        'position:fixed;bottom:1.5rem;right:1.5rem;z-index:99999;',
+        'background:#fff;color:#1a1a2e;',
+        'width:280px;border-radius:16px;',
+        'box-shadow:0 8px 32px rgba(0,0,0,.18),0 2px 8px rgba(49,107,255,.10);',
+        'font-family:Inter,sans-serif;font-size:.875rem;line-height:1.5;',
+        'animation:ab-slidein .35s cubic-bezier(.4,0,.2,1);',
+        'overflow:hidden;',
+      '}',
+      '#ab-cookie-head{',
+        'background:#316bff;padding:.75rem 1rem;',
+        'display:flex;align-items:center;gap:.5rem;',
+      '}',
+      '#ab-cookie-head span{font-size:1.1rem}',
+      '#ab-cookie-head strong{color:#fff;font-size:.9rem;letter-spacing:.02em}',
+      '#ab-cookie-body{padding:1rem}',
+      '#ab-cookie-body p{margin:0 0 1rem;color:#444;font-size:.82rem;line-height:1.55}',
+      '#ab-cookie-body a{color:#316bff;text-decoration:none;font-size:.78rem}',
+      '#ab-cookie-body a:hover{text-decoration:underline}',
+      '#ab-cookie-btns{display:flex;gap:.5rem;margin-bottom:.75rem}',
+      '#ab-reject{',
+        'flex:1;background:#f0f2f5;border:none;color:#555;',
+        'padding:.5rem;border-radius:8px;cursor:pointer;',
+        'font-size:.82rem;font-weight:500;transition:background .2s;',
+      '}',
+      '#ab-reject:hover{background:#e2e5eb;color:#222}',
+      '#ab-accept{',
+        'flex:1;background:#316bff;border:none;color:#fff;',
+        'padding:.5rem;border-radius:8px;cursor:pointer;',
+        'font-size:.82rem;font-weight:700;transition:background .2s;',
+      '}',
       '#ab-accept:hover{background:#2558e0}',
     ].join('');
     document.head.appendChild(s);
@@ -55,13 +79,14 @@
     b.setAttribute('role', 'dialog');
     b.setAttribute('aria-label', 'Consenso cookie');
     b.innerHTML =
-      '<div id="ab-cookie-inner">' +
-        '<p>Usiamo <strong>Google Analytics</strong> per statistiche anonime di navigazione. Nessun cookie di profilazione o pubblicità. ' +
-        '<a href="/html/policy.html">Privacy policy</a></p>' +
+      '<div id="ab-cookie-head"><span>🍪</span><strong>Cookie & Privacy</strong></div>' +
+      '<div id="ab-cookie-body">' +
+        '<p>Usiamo <strong>Google Analytics</strong> per statistiche anonime. Nessun tracciamento pubblicitario.</p>' +
         '<div id="ab-cookie-btns">' +
           '<button id="ab-reject">Rifiuta</button>' +
           '<button id="ab-accept">Accetta</button>' +
         '</div>' +
+        '<a href="/html/policy.html">Privacy policy</a>' +
       '</div>';
     document.body.appendChild(b);
     document.getElementById('ab-accept').addEventListener('click', accept);
