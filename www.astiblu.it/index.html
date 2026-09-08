@@ -105,7 +105,7 @@
   </script>
 </head>
 
-<body>
+<body data-cms-page="homepage">
 
   <input class="menu-icon" type="checkbox" id="menu-icon" name="menu-icon" aria-label="Apri/chiudi menu" />
   <label for="menu-icon" aria-hidden="true"></label>
@@ -143,7 +143,7 @@
     <div class="poster__img reveal-left">
       <picture>
         <source srcset="index/img/webp/Asti-blu-cover.webp" type="image/webp">
-        <img src="index/img/Asti-blu-cover.jpg" alt="Copertina Asti Blu Subacquea" loading="lazy">
+        <img src="index/img/Asti-blu-cover.jpg" alt="Copertina Asti Blu Subacquea" loading="lazy" data-cms-img="cover_chi_siamo">
       </picture>
     </div>
     <div class="poster__content reveal-right">
@@ -175,7 +175,7 @@
           Comunale di Asti</strong> e con uscite al mare a partire dalla primavera.<br><br>
       <h4 class="med-text mt-1">Contattaci
         per la tua prova gratuita.</h4>
-      <a href="modulo-iscrizione.pdf" class="button" download="Modulo-Iscrizione-AstiBlu.pdf">Contattaci ora</a>
+      <a href="modulo-iscrizione.pdf" class="button" download="Modulo-Iscrizione-AstiBlu.pdf" data-cms-pdf>Contattaci ora</a>
       </p>
 
     </div>
@@ -187,7 +187,7 @@
     <div class="carousel-cell">
       <picture>
         <source srcset="index/img/webp/apnea-card.webp" type="image/webp">
-        <img src="index/img/apnea-card.jpg" alt="Corso di apnea Asti Blu Subacquea" class="img-card">
+        <img src="index/img/apnea-card.jpg" alt="Corso di apnea Asti Blu Subacquea" class="img-card" data-cms-img="apnea_card">
       </picture>
       <div class="card_details">
         <h4 class="title-card">Apnea</h4>
@@ -205,7 +205,7 @@
     <div class="carousel-cell">
       <picture>
         <source srcset="index/img/webp/sub-card.webp" type="image/webp">
-        <img src="index/img/sub-card.jpg" alt="Corso di subacquea ARA Asti Blu" class="img-card">
+        <img src="index/img/sub-card.jpg" alt="Corso di subacquea ARA Asti Blu" class="img-card" data-cms-img="sub_card">
       </picture>
       <div class="card_details">
         <h4 class="title-card">Subacquea</h4>
@@ -221,7 +221,7 @@
     <div class="carousel-cell">
       <picture>
         <source srcset="index/img/webp/apnea-agonismo.webp" type="image/webp">
-        <img src="index/img/apnea-agonismo.jpg" alt="Agonismo apnea Asti Blu Subacquea" class="img-card">
+        <img src="index/img/apnea-agonismo.jpg" alt="Agonismo apnea Asti Blu Subacquea" class="img-card" data-cms-img="agonismo_card">
       </picture>
       <div class="card_details">
         <h4 class="title-card">Agonismo</h4>
@@ -248,7 +248,7 @@
     <div class="carousel-cell">
       <picture>
         <source srcset="index/img/webp/sub-spec.webp" type="image/webp">
-        <img src="index/img/sub-spec.jpg" alt="Specialità subacquee Asti Blu" class="img-card">
+        <img src="index/img/sub-spec.jpg" alt="Specialità subacquee Asti Blu" class="img-card" data-cms-img="spec_card">
       </picture>
       <div class="card_details">
         <h4 class="title-card">Specialità Subacquee</h4>
@@ -265,7 +265,7 @@
     <div class="carousel-cell">
       <picture>
         <source srcset="index/img/webp/minisub-card.webp" type="image/webp">
-        <img src="index/img/minisub-card.jpg" alt="Corsi MiniSub per bambini Asti Blu" class="img-card">
+        <img src="index/img/minisub-card.jpg" alt="Corsi MiniSub per bambini Asti Blu" class="img-card" data-cms-img="minisub_card">
       </picture>
       <div class="card_details">
         <h4 class="title-card">MiniSub</h4>
@@ -280,7 +280,7 @@
     <div class="carousel-cell">
       <picture>
         <source srcset="index/img/webp/allenamenti-card.webp" type="image/webp">
-        <img src="index/img/allenamenti-card.jpg" alt="Allenamenti subacquea Asti Blu" class="img-card">
+        <img src="index/img/allenamenti-card.jpg" alt="Allenamenti subacquea Asti Blu" class="img-card" data-cms-img="allenamenti_card">
       </picture>
       <div class="card_details">
         <h4 class="title-card">Allenamenti</h4>
@@ -440,6 +440,7 @@
     crossorigin="anonymous" defer></script>
   <script src="script.js" defer></script>
   <script src="cookie-consent.js"></script>
+  <script src="content-loader.js"></script>
   <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
   <script>
     if (window.netlifyIdentity) {
