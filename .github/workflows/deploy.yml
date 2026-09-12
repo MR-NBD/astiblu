@@ -21,7 +21,7 @@ jobs:
           protocol: ftps
           port: 21
           local-dir: ./www.astiblu.it/
-          server-dir: /
+          server-dir: /www.astiblu.it/
           exclude: |
             **/.git*
             **/.git*/**
