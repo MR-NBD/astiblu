@@ -3,6 +3,7 @@ name: Deploy su Aruba FTP
 on:
   push:
     branches: [main]
+  workflow_dispatch:
 
 jobs:
   deploy:
