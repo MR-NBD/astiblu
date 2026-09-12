@@ -2,6 +2,15 @@
 header('Content-Type: application/json');
 header('Access-Control-Allow-Origin: https://astiblu.it');
 
+function security_log(string $event, string $detail = ''): void {
+    $ip      = $_SERVER['REMOTE_ADDR'] ?? 'unknown';
+    $date    = date('Y-m-d H:i:s');
+    $ua      = substr($_SERVER['HTTP_USER_AGENT'] ?? '', 0, 80);
+    $line    = "[{$date}] [{$event}] IP={$ip} | {$detail} | UA={$ua}" . PHP_EOL;
+    $logfile = __DIR__ . '/logs/contact_security.log';
+    @file_put_contents($logfile, $line, FILE_APPEND | LOCK_EX);
+}
+
 // Carica config esterna (non committata su git)
 $config = require __DIR__ . '/contact-config.php';
 
@@ -20,6 +29,7 @@ $_SESSION['contact_sends'] = array_filter(
     fn($t) => $now - $t < 3600
 );
 if (count($_SESSION['contact_sends']) >= 3) {
+    security_log('RATE_LIMIT', 'Superato limite 3 invii/ora');
     http_response_code(429);
     echo json_encode(['success' => false, 'error' => 'Troppe richieste. Riprova tra un\'ora.']);
     exit;
@@ -33,8 +43,9 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 
 // Honeypot: i bot compilano questo campo, gli umani no
 if (!empty($_POST['website'])) {
+    security_log('HONEYPOT', 'Bot intercettato da honeypot field');
     http_response_code(200);
-    echo json_encode(['success' => true]); // sembriamo ok ai bot
+    echo json_encode(['success' => true]);
     exit;
 }
 
@@ -66,6 +77,8 @@ $recaptcha = file_get_contents(
 $recaptcha = json_decode($recaptcha, true);
 
 if (!$recaptcha['success'] || ($recaptcha['score'] ?? 0) < 0.5) {
+    $score = $recaptcha['score'] ?? 'n/a';
+    security_log('RECAPTCHA_FAIL', "Score={$score}");
     http_response_code(400);
     echo json_encode(['success' => false, 'error' => 'Verifica anti-spam fallita. Riprova.']);
     exit;
@@ -88,8 +101,10 @@ $sent = mail($TO_EMAIL, "[AstiBlu] {$subject}", $body, $headers);
 
 if ($sent) {
     $_SESSION['contact_sends'][] = $now;
+    security_log('SENT_OK', "Oggetto={$subject}");
     echo json_encode(['success' => true]);
 } else {
+    security_log('SEND_FAIL', "mail() fallita");
     http_response_code(500);
     echo json_encode(['success' => false, 'error' => 'Errore invio. Contattaci via WhatsApp o email diretta.']);
 }

@@ -1,0 +1,4 @@
+AuthType Basic
+AuthName "Asti Blu CMS - Accesso Riservato"
+AuthUserFile /percorso-assoluto-aruba/.htpasswd
+Require valid-user

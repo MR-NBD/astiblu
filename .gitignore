@@ -10,3 +10,5 @@ MODULO ISCRIZIONE.pdf
 # Secrets (mai committare)
 .env
 www.astiblu.it/contact-config.php
+www.astiblu.it/.htpasswd
+www.astiblu.it/logs/*.log
