@@ -1,0 +1,51 @@
+# ─── HTTPS redirect ───────────────────────────────────────────────
+RewriteEngine On
+RewriteCond %{HTTPS} off
+RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# www → non-www
+RewriteCond %{HTTP_HOST} ^www\.astiblu\.it [NC]
+RewriteRule ^ https://astiblu.it%{REQUEST_URI} [L,R=301]
+
+# ─── Blocca accesso file sensibili ────────────────────────────────
+<FilesMatch "^(contact-config\.php|\.env|\.git)">
+  Order allow,deny
+  Deny from all
+</FilesMatch>
+
+# Blocca directory listing
+Options -Indexes
+
+# ─── Header sicurezza ─────────────────────────────────────────────
+<IfModule mod_headers.c>
+  Header always set X-Frame-Options "SAMEORIGIN"
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set X-XSS-Protection "1; mode=block"
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+  Header always set Permissions-Policy "camera=(), microphone=(), geolocation=()"
+  Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains" env=HTTPS
+</IfModule>
+
+# ─── Compressione GZIP ────────────────────────────────────────────
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/css text/javascript
+  AddOutputFilterByType DEFLATE application/javascript application/json
+  AddOutputFilterByType DEFLATE image/svg+xml
+</IfModule>
+
+# ─── Cache browser ────────────────────────────────────────────────
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType image/webp          "access plus 6 months"
+  ExpiresByType image/jpeg          "access plus 6 months"
+  ExpiresByType image/png           "access plus 6 months"
+  ExpiresByType video/mp4           "access plus 1 year"
+  ExpiresByType text/css            "access plus 1 month"
+  ExpiresByType application/javascript "access plus 1 month"
+  ExpiresByType application/pdf     "access plus 1 month"
+  ExpiresByType text/html           "access plus 1 hour"
+  ExpiresByType application/json    "access plus 1 hour"
+</IfModule>
+
+# ─── Pagina 404 custom (opzionale) ───────────────────────────────
+# ErrorDocument 404 /404.html
