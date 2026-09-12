@@ -4,9 +4,6 @@ RewriteCond %{HTTP:X-Forwarded-Proto} !https
 RewriteCond %{HTTPS} off
 RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 
-# www → non-www
-RewriteCond %{HTTP_HOST} ^www\.astiblu\.it [NC]
-RewriteRule ^ https://astiblu.it%{REQUEST_URI} [L,R=301]
 
 # ─── Blocca accesso file sensibili ────────────────────────────────
 <FilesMatch "^(contact-config\.php|\.env|\.htpasswd)">
