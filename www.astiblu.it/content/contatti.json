@@ -1,16 +1,52 @@
 {
   "email": "info@astiblu.it",
   "istruttori": [
-    {"nome": "Luciano Milanese",   "ruolo": "Iscrizioni e informazioni", "telefono": "3395065299"},
-    {"nome": "Andrea Caldera",     "ruolo": "Subacquea",                 "telefono": "3407575127"},
-    {"nome": "Fabio Macagno",      "ruolo": "Subacquea e specialità",    "telefono": "3462247606"},
-    {"nome": "Alessandro Iannuzzi","ruolo": "Apnea",                     "telefono": "3485914050"},
-    {"nome": "Deborah Speretta",   "ruolo": "Mini Sub",                  "telefono": "3479763248"}
+    {
+      "nome": "Luciano Milanese",
+      "ruolo": "Iscrizioni e informazioni",
+      "telefono": "3395065299"
+    },
+    {
+      "nome": "Andrea Caldera",
+      "ruolo": "Subacquea",
+      "telefono": "3407575127"
+    },
+    {
+      "nome": "Fabio Macagno",
+      "ruolo": "Subacquea e specialità",
+      "telefono": "3462247606"
+    },
+    {
+      "nome": "Alessandro Iannuzzi",
+      "ruolo": "Apnea",
+      "telefono": "3485914050"
+    },
+    {
+      "nome": "Deborah Speretta",
+      "ruolo": "Mini Sub",
+      "telefono": "3479763248"
+    }
   ],
   "infopoint": [
-    {"nome": "Luciano",   "presso": "Lacoste Asti",           "indirizzo": "Via Teatro Alfieri, 1 - 14100 ASTI"},
-    {"nome": "Claudio",   "presso": "Officina Massa",          "indirizzo": "Piazza I Maggio, 4 – 14100 ASTI"},
-    {"nome": "Alessandro","presso": "Vittoria Assicurazioni",  "indirizzo": "Corso Alfieri, 130 – 14100 ASTI"},
-    {"nome": "Andrea",    "presso": "Caldera Gioielli",        "indirizzo": "Via Palazzo di Città, 18 – 14100 ASTI"}
+    {
+      "nome": "Luciano",
+      "presso": "Lacoste Asti",
+      "indirizzo": "Via Teatro Alfieri, 1 - 14100 ASTI"
+    },
+    {
+      "nome": "Claudio",
+      "presso": "Officina Massa",
+      "indirizzo": "Piazza I Maggio, 4 - 14100 ASTI"
+    },
+    {
+      "nome": "Alessandro",
+      "presso": "Vittoria Assicurazioni",
+      "indirizzo": "Corso Alfieri, 130 - 14100 ASTI"
+    },
+    {
+      "nome": "Andrea",
+      "presso": "Caldera Gioielli",
+      "indirizzo": "Via Palazzo di Città, 18 - 14100 ASTI"
+    }
   ]
 }

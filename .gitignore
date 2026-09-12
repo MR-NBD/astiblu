@@ -1,11 +1,16 @@
 # Documentazione e file interni
 .obsidian/
+General Documentation/
 DEV-GUIDE.md
 Guida Gestione Hosting Aruba - AstiBlu.it.md
 Guida Gestione Hosting Aruba - AstiBlu.it.pdf
 img-documentation/
 MODULO ISCRIZIONE.pdf
 2026-08-31*
+2026-09-*
+
+# File sorgente logo (già elaborato in www.astiblu.it/logo/)
+logo_Asti_Blu-removebg-preview.png
 
 # Secrets (mai committare)
 .env

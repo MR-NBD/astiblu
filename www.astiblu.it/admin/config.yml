@@ -21,7 +21,7 @@ collections:
           - name: istruttori
             label: "Istruttori (tabella telefoni)"
             widget: list
-            summary: "{{fields.nome}} — {{fields.ruolo}}"
+            summary: "{{fields.nome}} - {{fields.ruolo}}"
             fields:
               - {name: nome,      label: "Nome completo",    widget: string}
               - {name: ruolo,     label: "Riferimento per",  widget: string}
@@ -29,7 +29,7 @@ collections:
           - name: infopoint
             label: "InfoPoint (punti fisici)"
             widget: list
-            summary: "{{fields.nome}} — {{fields.presso}}"
+            summary: "{{fields.nome}} - {{fields.presso}}"
             fields:
               - {name: nome,      label: "Nome riferimento", widget: string}
               - {name: presso,    label: "Presso (negozio)", widget: string}
@@ -42,14 +42,14 @@ collections:
         label: "Testi Homepage"
         file: www.astiblu.it/content/homepage.json
         fields:
-          - {name: chi_siamo_1,       label: "Chi Siamo — paragrafo 1",     widget: text}
-          - {name: chi_siamo_2,       label: "Chi Siamo — paragrafo 2",     widget: text}
-          - {name: corsi_intro,       label: "Sezione Corsi — intro",       widget: text}
-          - {name: corsi_stagione,    label: "Corsi — periodo e sede",      widget: string}
-          - {name: allenamenti_testo, label: "Card Allenamenti — testo",    widget: text}
-          - {name: viaggi_1,          label: "Gite Sociali — paragrafo 1",  widget: text}
-          - {name: viaggi_2,          label: "Gite Sociali — paragrafo 2",  widget: text}
-          - {name: dove_trovarci,     label: "Dove Trovarci — testo",       widget: text}
+          - {name: chi_siamo_1,       label: "Chi Siamo - paragrafo 1",     widget: text}
+          - {name: chi_siamo_2,       label: "Chi Siamo - paragrafo 2",     widget: text}
+          - {name: corsi_intro,       label: "Sezione Corsi - intro",       widget: text}
+          - {name: corsi_stagione,    label: "Corsi - periodo e sede",      widget: string}
+          - {name: allenamenti_testo, label: "Card Allenamenti - testo",    widget: text}
+          - {name: viaggi_1,          label: "Gite Sociali - paragrafo 1",  widget: text}
+          - {name: viaggi_2,          label: "Gite Sociali - paragrafo 2",  widget: text}
+          - {name: dove_trovarci,     label: "Dove Trovarci - testo",       widget: text}
 
   - name: media
     label: "🖼️ Immagini e File"

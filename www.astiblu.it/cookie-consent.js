@@ -68,6 +68,12 @@
         'font-size:.82rem;font-weight:700;transition:background .2s;',
       '}',
       '#ab-accept:hover{background:#2558e0}',
+      '@media(max-width:600px){',
+        '#ab-cookie{',
+          'left:1rem;right:1rem;bottom:1rem;',
+          'width:auto;',
+        '}',
+      '}',
     ].join('');
     document.head.appendChild(s);
   }

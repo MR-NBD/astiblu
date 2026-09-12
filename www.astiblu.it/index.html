@@ -52,7 +52,9 @@
   <link rel="dns-prefetch" href="//api.whatsapp.com">
 
   <!-- Stylesheets -->
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    integrity="sha512-SfTiTlX6kk+qitfevl/7LibUOeJWlt9rbyDn92a1DqWOw9vWG2MFoays0sgObmWazO5BQPiFucnnEAjpAB+/Sw=="
+    crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css"
     integrity="sha512-NmLkDIU1C/C88wi324HBc+S2kLhi08PN5GDeUVVVC/BVt/9Izdsc9SVeVfA1UZbY3sHUlDSyRXhCzHfr6hmPPw=="
     crossorigin="anonymous">
@@ -63,7 +65,9 @@
     integrity="sha512-ztsAq/T5Mif7onFaDEa5wsi2yyDn5ygdVwSSQ4iok5BPJQGYz1CoXWZSA7OgwGWrxrSrbF0K85PD5uLpimu4eQ=="
     crossorigin="anonymous">
 
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&family=Montserrat:wght@800&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&family=Montserrat:wght@800&display=swap"
+    rel="stylesheet">
 
   <!-- Structured Data -->
   <script type="application/ld+json">
@@ -71,11 +75,13 @@
     "@context": "https://schema.org",
     "@type": "SportsOrganization",
     "name": "Asti Blu Subacquea",
-    "description": "Associazione sportiva di subacquea e apnea ad Asti, 5 volte Campioni d'Italia di Apnea a squadre",
+    "description": "Associazione sportiva di subacquea e apnea ad Asti, 5 volte Campioni d'Italia di Apnea a squadre. Corsi sub Asti per ogni livello: ARA, apnea, agonismo e miniSub.",
     "url": "https://astiblu.it",
     "logo": "https://astiblu.it/logo/logo.png",
     "image": "https://astiblu.it/index/img/Asti-blu-cover.jpg",
     "telephone": "+393395065299",
+    "email": "info@astiblu.it",
+    "priceRange": "€€",
     "address": {
       "@type": "PostalAddress",
       "streetAddress": "Viale Tassoni",
@@ -88,6 +94,71 @@
       "@type": "GeoCoordinates",
       "latitude": "44.898071579059916",
       "longitude": "8.190557215735511"
+    },
+    "areaServed": [
+      {
+        "@type": "City",
+        "name": "Asti"
+      },
+      {
+        "@type": "AdministrativeArea",
+        "name": "Provincia di Asti"
+      },
+      {
+        "@type": "AdministrativeArea",
+        "name": "Piemonte"
+      }
+    ],
+    "hasOfferCatalog": {
+      "@type": "OfferCatalog",
+      "name": "Corsi subacquea Asti",
+      "itemListElement": [
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Course",
+            "name": "Corso di Apnea",
+            "description": "Corsi di apnea 1°, 2° e 3° grado indoor e outdoor. Senza attrezzatura pesante, adatto a tutti.",
+            "provider": { "@type": "Organization", "name": "Asti Blu Subacquea" }
+          }
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Course",
+            "name": "Corso Subacquea ARA",
+            "description": "Brevetto subacquea ARA FIPSAS per tutti i livelli. Immersioni in piscina e in mare.",
+            "provider": { "@type": "Organization", "name": "Asti Blu Subacquea" }
+          }
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Course",
+            "name": "Agonismo Apnea",
+            "description": "Percorso agonistico per atleti che vogliono competere in apnea indoor e outdoor a livello nazionale.",
+            "provider": { "@type": "Organization", "name": "Asti Blu Subacquea" }
+          }
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Course",
+            "name": "MiniSub",
+            "description": "Corso subacquea per bambini. Avvicinamento al mondo sommerso in ambiente sicuro e controllato.",
+            "provider": { "@type": "Organization", "name": "Asti Blu Subacquea" }
+          }
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Course",
+            "name": "Allenamenti e Attività Avanzate",
+            "description": "Allenamenti continui, specialità subacquee e uscite in mare per subacquei esperti.",
+            "provider": { "@type": "Organization", "name": "Asti Blu Subacquea" }
+          }
+        }
+      ]
     },
     "sameAs": [
       "https://www.instagram.com/astiblu_subacquea/",
@@ -122,9 +193,9 @@
   <div class="hero" id="Home">
     <div class="hero__content">
       <p class="logopng">
-        <img src="logo/logo.png" height="152" width="240" alt="Logo Asti Blu Subacquea" />
+        <img src="logo/logo.png" height="140" width="140" alt="Logo Asti Blu Subacquea" />
         <a href="https://www.fipsas.it/" target="_blank" rel="noopener" title="Federazione Italiana Pesca Sportiva">
-          <img src="logo/fipsaslogo.png" height="135" width="135" alt="Logo FIPSAS" />
+          <img src="logo/fipsaslogo.png" height="140" width="140" alt="Logo FIPSAS" />
         </a>
       </p>
       <p class="intro-text tw">Vieni a divertirti con noi</p>
@@ -137,27 +208,39 @@
       <source id="video-source" src="index/vid/video-back.mp4" type="video/mp4">
       Il tuo browser non supporta i video HTML5.
     </video>
+
+    <div aria-hidden="true">
+      <span class="bubble"></span>
+      <span class="bubble"></span>
+      <span class="bubble"></span>
+      <span class="bubble"></span>
+      <span class="bubble"></span>
+      <span class="bubble"></span>
+      <span class="bubble"></span>
+      <span class="bubble"></span>
+      <span class="bubble"></span>
+      <span class="bubble"></span>
+      <span class="bubble"></span>
+      <span class="bubble"></span>
+    </div>
   </div>
 
   <div class="poster" id="chi-siamo">
     <div class="poster__img reveal-left">
       <picture>
         <source srcset="index/img/webp/Asti-blu-cover.webp" type="image/webp">
-        <img src="index/img/Asti-blu-cover.jpg" alt="Copertina Asti Blu Subacquea" loading="lazy" data-cms-img="cover_chi_siamo">
+        <img src="index/img/Asti-blu-cover.jpg" alt="Copertina Asti Blu Subacquea" loading="lazy"
+          data-cms-img="cover_chi_siamo">
       </picture>
     </div>
     <div class="poster__content reveal-right">
       <h2 class="big-text">Chi Siamo</h2>
-      <p class="normal-text">
-        L’Asti Blu Subacquea è una società nata da un gruppo di amici che dal 2001 vuole trasmettere la propria passione
-        per la subacquea e l'apnea.
-        <br><br>
-        La promozione della didattica FIPSAS per AR e apnea è al centro della nostri valori, mentre la
-        squadra
-        agonistica continua a crescere nelle sue competenze.
-        L'Asti Blu offre una vasta gamma di corsi dai bambini agli adulti, garantendo
-        un'esperienza formativa completa e coinvolgente.
-      </p>
+      <p class="normal-text" data-cms="chi_siamo_1">L’Asti Blu Subacquea è una società nata da un gruppo di amici che
+        dal 2001 vuole trasmettere la propria passione per la subacquea e l’apnea ad Asti e provincia.</p>
+      <p class="normal-text" data-cms="chi_siamo_2">La promozione della didattica FIPSAS per AR e apnea è al centro dei
+        nostri valori, mentre la squadra agonistica continua a crescere nelle sue competenze. L’Asti Blu offre una vasta
+        gamma di corsi sub Asti, dal brevetto subacquea entry-level fino alle specialità avanzate, per bambini e
+        adulti, garantendo un’esperienza formativa completa e coinvolgente.</p>
       <a href="#corsi" class="button">Scopri i nostri Corsi</a>
     </div>
   </div>
@@ -165,19 +248,16 @@
 
   <div class="grid mt-1">
     <div class="col reveal">
-      <h3 class="big-text">Scopri i nostri corsi e attività</h3>
-      <p class="normal-text">
-        Esplora il mondo acquatico con noi! Asti Blu
-        Subacquea offre un vasto catalogo di attività,
-        sia per chi vuole muovere i primi passi sia per agonisti o subacquei esperti. Vieni in piscina a provare e
-        unisciti a noi.<br>
-        I nostri corsi si svolgono da ottobre a maggio con cadenza settimanale presso la <strong>Piscina
-          Comunale di Asti</strong> e con uscite al mare a partire dalla primavera.<br><br>
-      <h4 class="med-text mt-1">Contattaci
-        per la tua prova gratuita.</h4>
-      <a href="modulo-iscrizione.pdf" class="button" download="Modulo-Iscrizione-AstiBlu.pdf" data-cms-pdf>Contattaci ora</a>
-      </p>
-
+      <h2 class="big-text">Scopri i nostri corsi e attività</h2>
+      <p class="normal-text" data-cms="corsi_intro">Esplora il mondo acquatico con noi! Asti Blu Subacquea offre un
+        vasto catalogo di attività, sia per chi vuole muovere i primi passi sia per agonisti o subacquei esperti. Vieni
+        in piscina a provare e unisciti a noi.</p>
+      <p class="normal-text" data-cms="corsi_stagione">I nostri corsi di immersioni ad Asti si svolgono da ottobre a
+        maggio con cadenza settimanale presso la Piscina Comunale di Asti e con uscite al mare a partire dalla
+        primavera.</p>
+      <h4 class="med-text mt-1">Contattaci per la tua prova gratuita.</h4>
+      <a href="modulo-iscrizione.pdf" class="button" download="Modulo-Iscrizione-AstiBlu.pdf" data-cms-pdf>Contattaci
+        ora</a>
     </div>
   </div>
 
@@ -187,7 +267,8 @@
     <div class="carousel-cell">
       <picture>
         <source srcset="index/img/webp/apnea-card.webp" type="image/webp">
-        <img src="index/img/apnea-card.jpg" alt="Corso di apnea Asti Blu Subacquea" class="img-card" data-cms-img="apnea_card">
+        <img src="index/img/apnea-card.jpg" alt="Corso di apnea Asti Blu Subacquea" class="img-card"
+          data-cms-img="apnea_card">
       </picture>
       <div class="card_details">
         <h4 class="title-card">Apnea</h4>
@@ -205,7 +286,8 @@
     <div class="carousel-cell">
       <picture>
         <source srcset="index/img/webp/sub-card.webp" type="image/webp">
-        <img src="index/img/sub-card.jpg" alt="Corso di subacquea ARA Asti Blu" class="img-card" data-cms-img="sub_card">
+        <img src="index/img/sub-card.jpg" alt="Corso di subacquea ARA Asti Blu" class="img-card"
+          data-cms-img="sub_card">
       </picture>
       <div class="card_details">
         <h4 class="title-card">Subacquea</h4>
@@ -221,7 +303,8 @@
     <div class="carousel-cell">
       <picture>
         <source srcset="index/img/webp/apnea-agonismo.webp" type="image/webp">
-        <img src="index/img/apnea-agonismo.jpg" alt="Agonismo apnea Asti Blu Subacquea" class="img-card" data-cms-img="agonismo_card">
+        <img src="index/img/apnea-agonismo.jpg" alt="Agonismo apnea Asti Blu Subacquea" class="img-card"
+          data-cms-img="agonismo_card">
       </picture>
       <div class="card_details">
         <h4 class="title-card">Agonismo</h4>
@@ -255,7 +338,7 @@
         <p class="p-cards">Per chi volesse approfondire e allargare le proprie conoscenze offriamo i seguenti corsi di
           specialità:<br>
           - Orientamento, Immersioni Notturne, Muta stagna<br>
-          - Immersione su Relitti e secche, Immersioni Notturne<br>
+          - Immersione su Relitti e secche<br>
           - Nitrox<br>
           - Biologia<br>
           - Salvamento, Primo Soccorso<br></p>
@@ -265,7 +348,8 @@
     <div class="carousel-cell">
       <picture>
         <source srcset="index/img/webp/minisub-card.webp" type="image/webp">
-        <img src="index/img/minisub-card.jpg" alt="Corsi MiniSub per bambini Asti Blu" class="img-card" data-cms-img="minisub_card">
+        <img src="index/img/minisub-card.jpg" alt="Corsi MiniSub per bambini Asti Blu" class="img-card"
+          data-cms-img="minisub_card">
       </picture>
       <div class="card_details">
         <h4 class="title-card">MiniSub</h4>
@@ -280,13 +364,14 @@
     <div class="carousel-cell">
       <picture>
         <source srcset="index/img/webp/allenamenti-card.webp" type="image/webp">
-        <img src="index/img/allenamenti-card.jpg" alt="Allenamenti subacquea Asti Blu" class="img-card" data-cms-img="allenamenti_card">
+        <img src="index/img/allenamenti-card.jpg" alt="Allenamenti subacquea Asti Blu" class="img-card"
+          data-cms-img="allenamenti_card">
       </picture>
       <div class="card_details">
         <h4 class="title-card">Allenamenti</h4>
-        <p class="p-cards">Gli allenamenti settimanali in piscina sono aperti a tutti i soci Asti Blu.
-          Ci alleniamo ogni lunedì e venerdì sera dalle 20:00 alle 22:00 presso la Piscina Comunale di Asti.
-          Sia per apnea che per subacquea, con supervisione degli istruttori.</p>
+        <p class="p-cards" data-cms="allenamenti_testo">Con i nostri allenamenti subacquei, non solo imparerai a
+          muoverti in sicurezza nel mondo sottomarino, ma svilupperai abilità che ti aiuteranno ad approfittare sempre
+          di più della bellezza naturale e dei segreti del mare.</p>
         <button class="button-card"><a href="html/contatti.html">Scopri di più</a></button>
       </div>
     </div>
@@ -298,14 +383,11 @@
     </div>
     <div class="bg-cover__text reveal">
       <h2 class="med-text tw">...ma anche gite sociali!</h2>
-      <p class="normal-text tw">
-        Per noi il mare non ha confini. La nostra società subacquea non è solo un punto di riferimento per corsi,
-        immersioni e apnea, ma anche un compagno di viaggio per chi desidera esplorare i fondali del mondo.
-      </p>
-      <p class="normal-text tw">
-        Organizziamo esperienze uniche che vanno dalle acque cristalline del Mediterraneo alle destinazioni più
-        esotiche, dove la subacquea si trasforma in un viaggio indimenticabile.
-      </p>
+      <p class="normal-text tw" data-cms="viaggi_1">Per noi il mare non ha confini. La nostra società subacquea non è
+        solo un punto di riferimento per corsi, immersioni e apnea, ma anche un compagno di viaggio per chi desidera
+        esplorare i fondali del mondo.</p>
+      <p class="normal-text tw" data-cms="viaggi_2">Organizziamo esperienze uniche che vanno dalle acque cristalline del
+        Mediterraneo alle destinazioni più esotiche, dove la subacquea si trasforma in un viaggio indimenticabile.</p>
       <!--<p class="normal-text tw">
         Non lasciarti sfuggire l'opportunità di vivere un'esperienza unica con l'Asti Blu.
         Unisciti a noi per i nostri viaggi e preparati a esplorare i fondali marini più incredibili del pianeta, creando
@@ -352,7 +434,8 @@
                   class="formbold-form-input" required aria-label="Inserisci il tuo messaggio"></textarea>
               </div>
 
-              <div id="contact-feedback" role="alert" aria-live="polite" style="display:none;margin-bottom:1rem;padding:.75rem 1rem;border-radius:6px;font-size:.9rem;"></div>
+              <div id="contact-feedback" role="alert" aria-live="polite"
+                style="display:none;margin-bottom:1rem;padding:.75rem 1rem;border-radius:6px;font-size:.9rem;"></div>
 
               <div>
                 <button type="submit" class="formbold-btn" id="contact-submit">Invia</button>
@@ -387,10 +470,9 @@
     </div>
     <div class="poster__content reveal-right">
       <h2 class="big-text tw">Dove puoi trovarci</h2>
-      <p class="normal-text">
-        Puoi venirci a trovare da ottobre a maggio il lunedì e il venerdì sera dalle 20:00 alle 22:00 qui in piscina.
-        Ti raccamandiamo di contattarci privatamente per evitare di fare un viaggio a vuoto.
-      </p>
+      <p class="normal-text" data-cms="dove_trovarci">Puoi venirci a trovare da ottobre a maggio il lunedì e il venerdì
+        sera dalle 20:00 alle 22:00 qui in piscina. Ti raccomandiamo di contattarci privatamente per evitare di fare un
+        viaggio a vuoto.</p>
     </div>
   </div>
 
@@ -454,7 +536,7 @@
     }
   </script>
 
-  <!-- reCAPTCHA v3 — sostituire SITE_KEY con la chiave ottenuta da Google -->
+  <!-- reCAPTCHA v3 - sostituire SITE_KEY con la chiave ottenuta da Google -->
   <script src="https://www.google.com/recaptcha/api.js?render=6Lf7JK0tAAAAAAz2Y9b2ewxn2qeG3_vF1ZDU3Zn_" defer></script>
   <script>
     document.addEventListener('DOMContentLoaded', function () {

@@ -65,8 +65,11 @@
       var rows = data.istruttori.map(function (i) {
         var tel = i.telefono.replace(/\D/g, '');
         var telFmt = tel.replace(/(\d{3})(\d+)/, '$1 $2');
-        return '<tr><td>' + i.nome + '</td><td>' + i.ruolo + '</td>' +
-               '<td><a href="tel:+39' + tel + '" style="color:inherit;">' + telFmt + '</a></td></tr>';
+        return '<tr>' +
+          '<td data-label="Nome">' + i.nome + '</td>' +
+          '<td data-label="Riferimento per">' + i.ruolo + '</td>' +
+          '<td data-label="Telefono"><a href="tel:+39' + tel + '" style="color:inherit;">' + telFmt + '</a></td>' +
+          '</tr>';
       }).join('');
       iDiv.innerHTML =
         '<table class="table"><thead><tr><th>Nome</th><th>Riferimento per</th><th>Telefono</th></tr></thead>' +
@@ -75,7 +78,11 @@
 
     if (pDiv && data.infopoint) {
       var rows2 = data.infopoint.map(function (p) {
-        return '<tr><td>' + p.nome + '</td><td>' + p.presso + '</td><td>' + p.indirizzo + '</td></tr>';
+        return '<tr>' +
+          '<td data-label="Riferimento">' + p.nome + '</td>' +
+          '<td data-label="Presso">' + p.presso + '</td>' +
+          '<td data-label="Indirizzo">' + p.indirizzo + '</td>' +
+          '</tr>';
       }).join('');
       pDiv.innerHTML =
         '<table class="table"><thead><tr><th>Riferimento</th><th>Presso</th><th>Indirizzo</th></tr></thead>' +
