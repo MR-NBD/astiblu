@@ -77,6 +77,7 @@ button:hover{background:#085e8f}
 </style>
 </head><body>
 <div class="card">
+  <img src="../logo/logo.png" alt="Logo Asti Blu" style="display:block;margin:0 auto 16px;width:72px;height:72px;border-radius:50%">
   <h1>Asti Blu<br><span style="font-size:.85rem;font-weight:400;color:#555">Pannello Admin</span></h1>
   <form method="post">
     <input type="hidden" name="action" value="login">
