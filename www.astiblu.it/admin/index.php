@@ -4,18 +4,42 @@ session_start();
 define('PASS_HASH',    '$2b$12$/T.lIaS8wgN3v1xBCxE2fuykLCNgidjkqRHky1I1ukmSiU5u6TCEy');
 define('HOMEPAGE_JSON', __DIR__ . '/../content/homepage.json');
 define('CONTATTI_JSON', __DIR__ . '/../content/contatti.json');
+define('MAX_ATTEMPTS', 5);
+define('LOCKOUT_SEC',  300);
 
 $msg = '';
 
+// ── Rate limiting ────────────────────────────────────────────────────────────
+$_SESSION['login_attempts'] = $_SESSION['login_attempts'] ?? 0;
+$_SESSION['lockout_until']  = $_SESSION['lockout_until']  ?? 0;
+$locked = time() < $_SESSION['lockout_until'];
+
+// ── CSRF token ───────────────────────────────────────────────────────────────
+if (empty($_SESSION['csrf'])) $_SESSION['csrf'] = bin2hex(random_bytes(32));
+
+function csrf_ok(): bool {
+    return hash_equals($_SESSION['csrf'], $_POST['csrf'] ?? '');
+}
+
 // ── Auth ────────────────────────────────────────────────────────────────────
-if (isset($_POST['action'])) {
-    if ($_POST['action'] === 'login') {
+if (isset($_POST['action']) && csrf_ok()) {
+    if ($_POST['action'] === 'login' && !$locked) {
         if (password_verify($_POST['password'] ?? '', PASS_HASH)) {
+            $_SESSION['login_attempts'] = 0;
             $_SESSION['ok'] = true;
+            session_regenerate_id(true);
             header('Location: ' . strtok($_SERVER['REQUEST_URI'], '?'));
             exit;
         }
-        $msg = 'Password errata.';
+        $_SESSION['login_attempts']++;
+        if ($_SESSION['login_attempts'] >= MAX_ATTEMPTS) {
+            $_SESSION['lockout_until'] = time() + LOCKOUT_SEC;
+            $msg = 'Troppi tentativi. Riprova tra 5 minuti.';
+        } else {
+            $msg = 'Password errata. Tentativo ' . $_SESSION['login_attempts'] . '/' . MAX_ATTEMPTS . '.';
+        }
+    } elseif ($_POST['action'] === 'login' && $locked) {
+        $msg = 'Account bloccato. Riprova tra ' . ceil(($_SESSION['lockout_until'] - time()) / 60) . ' minuti.';
     }
     if ($_POST['action'] === 'logout') {
         session_destroy();
@@ -45,6 +69,7 @@ button:hover{background:#085e8f}
   <h1>Asti Blu — Pannello Admin</h1>
   <form method="post">
     <input type="hidden" name="action" value="login">
+    <input type="hidden" name="csrf" value="<?= $_SESSION['csrf'] ?>">
     <label>Password</label>
     <input type="password" name="password" autofocus autocomplete="current-password">
     <button type="submit">Accedi</button>
@@ -55,7 +80,7 @@ button:hover{background:#085e8f}
 <?php exit; }
 
 // ── Salva dati ──────────────────────────────────────────────────────────────
-if (isset($_POST['action'])) {
+if (isset($_POST['action']) && csrf_ok()) {
 
     if ($_POST['action'] === 'save_homepage') {
         $keys = ['chi_siamo_1','chi_siamo_2','corsi_intro','corsi_stagione',
@@ -141,7 +166,7 @@ input:focus,textarea:focus{outline:none;border-color:#0a7cba;box-shadow:0 0 0 3p
 
 <header>
   <h1>Asti Blu — Pannello Admin</h1>
-  <form method="post"><input type="hidden" name="action" value="logout">
+  <form method="post"><input type="hidden" name="action" value="logout"><input type="hidden" name="csrf" value="<?= $_SESSION['csrf'] ?>">
     <button type="submit" style="background:transparent;border:1px solid #adc8e0;color:#adc8e0;padding:6px 14px;border-radius:6px;cursor:pointer;font-size:.85rem">Esci</button>
   </form>
 </header>
@@ -159,6 +184,7 @@ input:focus,textarea:focus{outline:none;border-color:#0a7cba;box-shadow:0 0 0 3p
 <div class="panel active" id="tab-homepage">
 <form method="post">
 <input type="hidden" name="action" value="save_homepage">
+<input type="hidden" name="csrf" value="<?= $_SESSION['csrf'] ?>">
 <div class="section-title">Chi Siamo</div>
 <?php
 field('Paragrafo 1','chi_siamo_1',$hp['chi_siamo_1']??'');
@@ -186,6 +212,7 @@ field('Paragrafo 2','viaggi_2',$hp['viaggi_2']??'');
 <div class="panel" id="tab-contatti">
 <form method="post">
 <input type="hidden" name="action" value="save_contatti">
+<input type="hidden" name="csrf" value="<?= $_SESSION['csrf'] ?>">
 <div class="section-title">Email</div>
 <div class="field">
   <label>Email principale</label>
