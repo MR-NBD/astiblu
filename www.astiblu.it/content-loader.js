@@ -57,36 +57,63 @@
     }
   }
 
+  function makeCell(label, text) {
+    var td = document.createElement('td');
+    td.setAttribute('data-label', label);
+    td.textContent = text;
+    return td;
+  }
+
+  function makeTable(headers) {
+    var table = document.createElement('table');
+    table.className = 'table';
+    var thead = table.createTHead();
+    var hr = thead.insertRow();
+    headers.forEach(function (h) {
+      var th = document.createElement('th');
+      th.textContent = h;
+      hr.appendChild(th);
+    });
+    table.createTBody();
+    return table;
+  }
+
   function buildContattiTables(data) {
     var iDiv = document.getElementById('cms-istruttori');
     var pDiv = document.getElementById('cms-infopoint');
 
     if (iDiv && data.istruttori) {
-      var rows = data.istruttori.map(function (i) {
+      var table = makeTable(['Nome', 'Riferimento per', 'Telefono']);
+      var tbody = table.tBodies[0];
+      data.istruttori.forEach(function (i) {
         var tel = i.telefono.replace(/\D/g, '');
         var telFmt = tel.replace(/(\d{3})(\d+)/, '$1 $2');
-        return '<tr>' +
-          '<td data-label="Nome">' + i.nome + '</td>' +
-          '<td data-label="Riferimento per">' + i.ruolo + '</td>' +
-          '<td data-label="Telefono"><a href="tel:+39' + tel + '" style="color:inherit;">' + telFmt + '</a></td>' +
-          '</tr>';
-      }).join('');
-      iDiv.innerHTML =
-        '<table class="table"><thead><tr><th>Nome</th><th>Riferimento per</th><th>Telefono</th></tr></thead>' +
-        '<tbody>' + rows + '</tbody></table>';
+        var tr = tbody.insertRow();
+        tr.appendChild(makeCell('Nome', i.nome));
+        tr.appendChild(makeCell('Riferimento per', i.ruolo));
+        var tdTel = makeCell('Telefono', '');
+        var a = document.createElement('a');
+        a.href = 'tel:+39' + tel;
+        a.style.color = 'inherit';
+        a.textContent = telFmt;
+        tdTel.appendChild(a);
+        tr.appendChild(tdTel);
+      });
+      iDiv.textContent = '';
+      iDiv.appendChild(table);
     }
 
     if (pDiv && data.infopoint) {
-      var rows2 = data.infopoint.map(function (p) {
-        return '<tr>' +
-          '<td data-label="Riferimento">' + p.nome + '</td>' +
-          '<td data-label="Presso">' + p.presso + '</td>' +
-          '<td data-label="Indirizzo">' + p.indirizzo + '</td>' +
-          '</tr>';
-      }).join('');
-      pDiv.innerHTML =
-        '<table class="table"><thead><tr><th>Riferimento</th><th>Presso</th><th>Indirizzo</th></tr></thead>' +
-        '<tbody>' + rows2 + '</tbody></table>';
+      var table2 = makeTable(['Riferimento', 'Presso', 'Indirizzo']);
+      var tbody2 = table2.tBodies[0];
+      data.infopoint.forEach(function (p) {
+        var tr = tbody2.insertRow();
+        tr.appendChild(makeCell('Riferimento', p.nome));
+        tr.appendChild(makeCell('Presso', p.presso));
+        tr.appendChild(makeCell('Indirizzo', p.indirizzo));
+      });
+      pDiv.textContent = '';
+      pDiv.appendChild(table2);
     }
 
     if (data.email) {

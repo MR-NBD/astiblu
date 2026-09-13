@@ -1,4 +1,11 @@
 <?php
+session_set_cookie_params([
+    'lifetime' => 0,
+    'path'     => '/admin/',
+    'secure'   => true,
+    'httponly' => true,
+    'samesite' => 'Strict',
+]);
 session_start();
 
 define('PASS_HASH',    '$2b$12$/T.lIaS8wgN3v1xBCxE2fuykLCNgidjkqRHky1I1ukmSiU5u6TCEy');
