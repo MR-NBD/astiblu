@@ -1130,10 +1130,12 @@ p {
 }
 
 .card_details {
-  padding: 16px 8px 8px;
+  padding: 16px 8px 24px;
   flex-grow: 1;
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  gap: 12px;
 }
 
 .title-card {
@@ -1145,7 +1147,6 @@ p {
 .p-cards {
   color: #7F8C9B;
   line-height: 150%;
-  flex-grow: 1;
 }
 
 .button-card {
@@ -1155,7 +1156,7 @@ p {
   font-weight: 600;
   color: #0077FF;
   background-color: #E0EFFF;
-  margin: auto auto 0;
+  align-self: center;
   display: block;
   transition: all 200ms ease-in-out;
   cursor: pointer;
@@ -1211,7 +1212,6 @@ p {
 
   .carousel-cell .p-cards {
     overflow-y: auto;
-    margin-bottom: 15px;
     font-size: 14px;
   }
 
