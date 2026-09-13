@@ -66,7 +66,7 @@ button:hover{background:#085e8f}
 </style>
 </head><body>
 <div class="card">
-  <h1>Asti Blu — Pannello Admin</h1>
+  <h1>Asti Blu<br><span style="font-size:.85rem;font-weight:400;color:#555">Pannello Admin</span></h1>
   <form method="post">
     <input type="hidden" name="action" value="login">
     <input type="hidden" name="csrf" value="<?= $_SESSION['csrf'] ?>">
@@ -135,9 +135,11 @@ function field($label, $name, $value, $type='textarea') {
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:system-ui,sans-serif;background:#f0f4f8;color:#222}
-header{background:#0a2540;color:#fff;padding:16px 32px;display:flex;align-items:center;justify-content:space-between}
-header h1{font-size:1.1rem}
-header a{color:#adc8e0;font-size:.85rem;text-decoration:none}
+header{background:#0a2540;color:#fff;padding:14px 32px;display:flex;align-items:center;justify-content:space-between}
+header .brand{display:flex;align-items:center;gap:14px}
+header .brand img{width:48px;height:48px;border-radius:50%}
+header h1{font-size:1rem;line-height:1.4}
+header h1 span{display:block;font-size:.8rem;font-weight:400;color:#adc8e0}
 .tabs{display:flex;gap:0;border-bottom:2px solid #0a7cba;padding:0 32px;background:#fff}
 .tab{padding:12px 24px;cursor:pointer;font-size:.95rem;color:#555;border-bottom:3px solid transparent;margin-bottom:-2px}
 .tab.active{color:#0a7cba;border-bottom-color:#0a7cba;font-weight:600}
@@ -165,7 +167,10 @@ input:focus,textarea:focus{outline:none;border-color:#0a7cba;box-shadow:0 0 0 3p
 </head><body>
 
 <header>
-  <h1>Asti Blu — Pannello Admin</h1>
+  <div class="brand">
+    <img src="../logo/logo.png" alt="Logo Asti Blu">
+    <h1>Asti Blu<span>Pannello Admin</span></h1>
+  </div>
   <form method="post"><input type="hidden" name="action" value="logout"><input type="hidden" name="csrf" value="<?= $_SESSION['csrf'] ?>">
     <button type="submit" style="background:transparent;border:1px solid #adc8e0;color:#adc8e0;padding:6px 14px;border-radius:6px;cursor:pointer;font-size:.85rem">Esci</button>
   </form>
