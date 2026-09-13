@@ -1,6 +1,6 @@
 <?php
 header('Content-Type: application/json');
-header('Access-Control-Allow-Origin: https://astiblu.it');
+header('Access-Control-Allow-Origin: https://www.astiblu.it');
 
 function security_log(string $event, string $detail = ''): void {
     $ip      = $_SERVER['REMOTE_ADDR'] ?? 'unknown';
@@ -69,14 +69,21 @@ if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
 }
 
 // Verifica reCAPTCHA v3
-$recaptcha = file_get_contents(
-    'https://www.google.com/recaptcha/api/siteverify?secret=' .
-    urlencode($RECAPTCHA_SECRET) . '&response=' . urlencode($token) .
-    '&remoteip=' . urlencode($_SERVER['REMOTE_ADDR'])
-);
-$recaptcha = json_decode($recaptcha, true);
+$ch = curl_init('https://www.google.com/recaptcha/api/siteverify');
+curl_setopt_array($ch, [
+    CURLOPT_RETURNTRANSFER => true,
+    CURLOPT_POST           => true,
+    CURLOPT_POSTFIELDS     => http_build_query([
+        'secret'   => $RECAPTCHA_SECRET,
+        'response' => $token,
+        'remoteip' => $_SERVER['REMOTE_ADDR'],
+    ]),
+    CURLOPT_TIMEOUT        => 5,
+]);
+$recaptcha = json_decode(curl_exec($ch), true);
+curl_close($ch);
 
-if (!$recaptcha['success'] || ($recaptcha['score'] ?? 0) < 0.5) {
+if (!($recaptcha['success'] ?? false) || ($recaptcha['score'] ?? 0) < 0.5) {
     $score = $recaptcha['score'] ?? 'n/a';
     security_log('RECAPTCHA_FAIL', "Score={$score}");
     http_response_code(400);
