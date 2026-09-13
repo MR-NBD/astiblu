@@ -27,3 +27,4 @@ jobs:
             **/.git*/**
             **/contact-config.php
             **/admin/oauth.php
+            **/oauth.php

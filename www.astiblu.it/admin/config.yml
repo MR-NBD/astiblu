@@ -3,7 +3,7 @@ backend:
   repo: MR-NBD/astiblu
   branch: main
   base_url: https://www.astiblu.it
-  auth_endpoint: admin/oauth.php
+  auth_endpoint: oauth.php
 
 locale: it
 
