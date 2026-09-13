@@ -2,8 +2,8 @@ backend:
   name: github
   repo: MR-NBD/astiblu
   branch: main
-  auth_type: pkce
-  app_id: Ov23li5bVyfP8vsgIkqj
+  base_url: https://www.astiblu.it
+  auth_endpoint: admin/oauth.php
 
 locale: it
 
