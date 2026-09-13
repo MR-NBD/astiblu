@@ -11,8 +11,9 @@
     xhr.onload = function () {
       if (xhr.status === 200) {
         try { cb(JSON.parse(xhr.responseText)); } catch (e) { console.error('content-loader: JSON parse error', path, e); }
-      }
+      } else { console.error('content-loader: HTTP', xhr.status, path); }
     };
+    xhr.onerror = function () { console.error('content-loader: network error', path); };
     xhr.send();
   }
 
