@@ -5,7 +5,7 @@
 <h1 align="center">Asti Blu Subacquea</h1>
 
 <p align="center">
-  Sito ufficiale dell'associazione subacquea Asti Blu — corsi, apnea, agonismo e viaggi.<br>
+  Sito ufficiale dell'associazione subacquea Asti Blu corsi, apnea, agonismo e viaggi.<br>
   <a href="https://www.astiblu.it">www.astiblu.it</a>
 </p>
 
@@ -15,8 +15,8 @@
 
 - HTML / CSS / JavaScript statico
 - PHP — form contatti (reCAPTCHA v3) + pannello admin
-- Apache `.htaccess` — HTTPS, sicurezza, caching
-- JSON — contenuti gestibili dal pannello admin
+- Apache `.htaccess` - HTTPS, sicurezza, caching
+- JSON - contenuti gestibili dal pannello admin
 - GitHub Actions → FTP deploy automatico su Aruba
 
 ## Deploy
