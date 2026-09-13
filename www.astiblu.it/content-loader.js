@@ -151,12 +151,6 @@
       loadJSON('/content/staff.json', buildStaffTables);
     }
 
-    if (page === 'statuto') {
-      loadJSON('/content/statuto.json', function (data) {
-        Object.keys(data).forEach(function (k) { inject('statuto_' + k, data[k]); });
-      });
-    }
-
     if (page === 'homepage') {
       loadJSON('/content/homepage.json', function (data) {
         Object.keys(data).forEach(function (k) { inject(k, data[k]); });

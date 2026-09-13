@@ -12,7 +12,7 @@ define('PASS_HASH',    '$2b$12$/T.lIaS8wgN3v1xBCxE2fuykLCNgidjkqRHky1I1ukmSiU5u6
 define('HOMEPAGE_JSON', __DIR__ . '/../content/homepage.json');
 define('CONTATTI_JSON', __DIR__ . '/../content/contatti.json');
 define('STAFF_JSON',    __DIR__ . '/../content/staff.json');
-define('STATUTO_JSON',  __DIR__ . '/../content/statuto.json');
+define('STATUTO_HTML',  __DIR__ . '/../html/statuto.html');
 define('MODULO_PATH',   __DIR__ . '/../modulo-iscrizione.pdf');
 define('MAX_ATTEMPTS', 5);
 define('LOCKOUT_SEC',  300);
@@ -145,9 +145,19 @@ if (isset($_POST['action']) && csrf_ok()) {
     }
 
     if ($_POST['action'] === 'save_statuto') {
-        $data = ['sede' => trim($_POST['sede'] ?? '')];
-        file_put_contents(STATUTO_JSON, json_encode($data, JSON_PRETTY_PRINT|JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES));
-        $msg = 'Statuto salvato!';
+        $new_content = $_POST['statuto_html'] ?? '';
+        $raw = file_get_contents(STATUTO_HTML);
+        $updated = preg_replace(
+            '/<!-- STATUTO_CONTENT_START -->.*?<!-- STATUTO_CONTENT_END -->/s',
+            '<!-- STATUTO_CONTENT_START -->' . "\n" . $new_content . "\n" . '<!-- STATUTO_CONTENT_END -->',
+            $raw
+        );
+        if ($updated !== null && $updated !== $raw) {
+            file_put_contents(STATUTO_HTML, $updated);
+            $msg = 'Statuto salvato!';
+        } else {
+            $msg = 'Errore: marcatori non trovati nel file statuto.html.';
+        }
     }
 }
 
@@ -171,11 +181,15 @@ if (isset($_POST['action']) && $_POST['action'] === 'upload_modulo' && csrf_ok()
     }
 }
 
-// ── Leggi JSON ───────────────────────────────────────────────────────────────
+// ── Leggi JSON / file ────────────────────────────────────────────────────────
 $hp = json_decode(file_get_contents(HOMEPAGE_JSON), true) ?? [];
 $ct = json_decode(file_get_contents(CONTATTI_JSON), true) ?? [];
 $sf = json_decode(file_get_contents(STAFF_JSON),    true) ?? [];
-$st = json_decode(file_get_contents(STATUTO_JSON),  true) ?? [];
+$statuto_content = '';
+$statuto_raw = file_get_contents(STATUTO_HTML);
+if (preg_match('/<!-- STATUTO_CONTENT_START -->(.*?)<!-- STATUTO_CONTENT_END -->/s', $statuto_raw, $m)) {
+    $statuto_content = trim($m[1]);
+}
 
 function field($label, $name, $value, $type='textarea') {
     $v = htmlspecialchars($value ?? '');
@@ -383,9 +397,12 @@ field('Paragrafo 2','viaggi_2',$hp['viaggi_2']??'');
 <form method="post">
 <input type="hidden" name="action" value="save_statuto">
 <input type="hidden" name="csrf" value="<?= $_SESSION['csrf'] ?>">
-<div class="section-title">Dati Statuto</div>
-<?php field('Sede legale (es. Asti, via Via al Mulino n. 24)','sede',$st['sede']??'','text'); ?>
-<p style="font-size:.82rem;color:#666;margin-bottom:18px">Il testo completo dello statuto è hardcoded nella pagina <code>html/statuto.html</code>. Per modifiche sostanziali contattare il developer.</p>
+<div class="section-title">Testo Statuto</div>
+<p style="font-size:.82rem;color:#555;margin-bottom:14px">Modifica direttamente gli articoli dello statuto. Il contenuto usa HTML: usa <code>&lt;br&gt;</code> per le interruzioni di riga e mantieni i tag <code>&lt;h2&gt;</code> e <code>&lt;p&gt;</code> per la formattazione.</p>
+<div class="field">
+  <label>Contenuto articoli (HTML)</label>
+  <textarea name="statuto_html" rows="35" style="font-family:monospace;font-size:.8rem;line-height:1.5"><?= htmlspecialchars($statuto_content) ?></textarea>
+</div>
 <button class="save-btn" type="submit">Salva Statuto</button>
 </form>
 </div>
