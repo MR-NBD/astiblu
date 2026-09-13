@@ -601,9 +601,9 @@ p {
   background-color: #25d366;
   color: #fff;
   border-radius: 50%;
-  text-align: center;
-  line-height: 60px;
-  font-size: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   z-index: 1000;
   animation: waPulse 2.5s ease-out infinite;
 }
