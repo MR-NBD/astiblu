@@ -44,6 +44,7 @@ if (isset($_POST['action']) && csrf_ok()) {
             $msg = 'Troppi tentativi. Riprova tra 5 minuti.';
         } else {
             $msg = 'Password errata. Tentativo ' . $_SESSION['login_attempts'] . '/' . MAX_ATTEMPTS . '.';
+            sleep(1);
         }
     } elseif ($_POST['action'] === 'login' && $locked) {
         $msg = 'Account bloccato. Riprova tra ' . ceil(($_SESSION['lockout_until'] - time()) / 60) . ' minuti.';
@@ -103,7 +104,8 @@ if (isset($_POST['action']) && csrf_ok()) {
         $nomi = $_POST['i_nome']  ?? [];
         $ruoli= $_POST['i_ruolo'] ?? [];
         $tels = $_POST['i_tel']   ?? [];
-        for ($i = 0; $i < count($nomi); $i++) {
+        $len_i = min(count($nomi), count($ruoli), count($tels));
+        for ($i = 0; $i < $len_i; $i++) {
             if (trim($nomi[$i]) === '') continue;
             $istruttori[] = ['nome'=>trim($nomi[$i]),'ruolo'=>trim($ruoli[$i]),'telefono'=>trim($tels[$i])];
         }
@@ -111,7 +113,8 @@ if (isset($_POST['action']) && csrf_ok()) {
         $pn = $_POST['p_nome']     ?? [];
         $pp = $_POST['p_presso']   ?? [];
         $pi = $_POST['p_indirizzo']?? [];
-        for ($i = 0; $i < count($pn); $i++) {
+        $len_p = min(count($pn), count($pp), count($pi));
+        for ($i = 0; $i < $len_p; $i++) {
             if (trim($pn[$i]) === '') continue;
             $infopoint[] = ['nome'=>trim($pn[$i]),'presso'=>trim($pp[$i]),'indirizzo'=>trim($pi[$i])];
         }
@@ -127,11 +130,12 @@ $ct = json_decode(file_get_contents(CONTATTI_JSON), true) ?? [];
 
 function field($label, $name, $value, $type='textarea') {
     $v = htmlspecialchars($value ?? '');
-    echo "<div class='field'><label>$label</label>";
+    $sl = htmlspecialchars($label); $sn = htmlspecialchars($name);
+    echo "<div class='field'><label>$sl</label>";
     if ($type === 'text')
-        echo "<input type='text' name='$name' value='$v'>";
+        echo "<input type='text' name='$sn' value='$v'>";
     else
-        echo "<textarea name='$name' rows='3'>$v</textarea>";
+        echo "<textarea name='$sn' rows='3'>$v</textarea>";
     echo "</div>";
 }
 ?>

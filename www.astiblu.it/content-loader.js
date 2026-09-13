@@ -1,9 +1,4 @@
 (function () {
-  var ROOT = (function () {
-    var s = document.querySelector('script[data-root]');
-    return s ? s.getAttribute('data-root') : '';
-  })();
-
   function inject(key, value) {
     document.querySelectorAll('[data-cms="' + key + '"]').forEach(function (el) {
       el.textContent = value;
@@ -12,10 +7,10 @@
 
   function loadJSON(path, cb) {
     var xhr = new XMLHttpRequest();
-    xhr.open('GET', path + '?v=' + Date.now(), true);
+    xhr.open('GET', path, true);
     xhr.onload = function () {
       if (xhr.status === 200) {
-        try { cb(JSON.parse(xhr.responseText)); } catch (e) { }
+        try { cb(JSON.parse(xhr.responseText)); } catch (e) { console.error('content-loader: JSON parse error', path, e); }
       }
     };
     xhr.send();
