@@ -67,6 +67,7 @@
     var hr = thead.insertRow();
     headers.forEach(function (h) {
       var th = document.createElement('th');
+      th.className = 'normal-text';
       th.textContent = h;
       hr.appendChild(th);
     });
@@ -120,11 +121,40 @@
     }
   }
 
+  function buildStaffSection(container, members) {
+    if (!container || !members) return;
+    var table = makeTable(['Nome', 'Ruolo']);
+    var tbody = table.tBodies[0];
+    members.forEach(function (m) {
+      var tr = tbody.insertRow();
+      tr.appendChild(makeCell('Nome', m.nome));
+      tr.appendChild(makeCell('Ruolo', m.ruolo));
+    });
+    container.textContent = '';
+    container.appendChild(table);
+  }
+
+  function buildStaffTables(data) {
+    buildStaffSection(document.getElementById('cms-staff-ara'),    data.ara);
+    buildStaffSection(document.getElementById('cms-staff-apnea'),  data.apnea);
+    buildStaffSection(document.getElementById('cms-staff-minisub'),data.minisub);
+  }
+
   document.addEventListener('DOMContentLoaded', function () {
     var page = document.body.getAttribute('data-cms-page');
 
     if (page === 'contatti') {
       loadJSON('/content/contatti.json', buildContattiTables);
+    }
+
+    if (page === 'staff') {
+      loadJSON('/content/staff.json', buildStaffTables);
+    }
+
+    if (page === 'statuto') {
+      loadJSON('/content/statuto.json', function (data) {
+        Object.keys(data).forEach(function (k) { inject('statuto_' + k, data[k]); });
+      });
     }
 
     if (page === 'homepage') {

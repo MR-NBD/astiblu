@@ -11,6 +11,9 @@ session_start();
 define('PASS_HASH',    '$2b$12$/T.lIaS8wgN3v1xBCxE2fuykLCNgidjkqRHky1I1ukmSiU5u6TCEy');
 define('HOMEPAGE_JSON', __DIR__ . '/../content/homepage.json');
 define('CONTATTI_JSON', __DIR__ . '/../content/contatti.json');
+define('STAFF_JSON',    __DIR__ . '/../content/staff.json');
+define('STATUTO_JSON',  __DIR__ . '/../content/statuto.json');
+define('MODULO_PATH',   __DIR__ . '/../modulo-iscrizione.pdf');
 define('MAX_ATTEMPTS', 5);
 define('LOCKOUT_SEC',  300);
 
@@ -60,7 +63,7 @@ if (!($_SESSION['ok'] ?? false)) { ?>
 <!DOCTYPE html><html lang="it"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="robots" content="noindex,nofollow">
-<title>Asti Blu — Admin</title>
+<title>Asti Blu Admin</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:system-ui,sans-serif;background:#0a2540;display:flex;align-items:center;justify-content:center;min-height:100vh}
@@ -92,6 +95,7 @@ if (isset($_POST['action']) && csrf_ok()) {
 
     if ($_POST['action'] === 'save_homepage') {
         $keys = ['chi_siamo_1','chi_siamo_2','corsi_intro','corsi_stagione',
+                 'apnea_testo','sub_testo','agonismo_testo','spec_testo','minisub_testo',
                  'allenamenti_testo','viaggi_1','viaggi_2','dove_trovarci'];
         $data = [];
         foreach ($keys as $k) $data[$k] = trim($_POST[$k] ?? '');
@@ -122,11 +126,56 @@ if (isset($_POST['action']) && csrf_ok()) {
         file_put_contents(CONTATTI_JSON, json_encode($data, JSON_PRETTY_PRINT|JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES));
         $msg = 'Contatti salvati!';
     }
+
+    if ($_POST['action'] === 'save_staff') {
+        $sections = ['ara','apnea','minisub'];
+        $data = [];
+        foreach ($sections as $s) {
+            $nomi  = $_POST[$s . '_nome']  ?? [];
+            $ruoli = $_POST[$s . '_ruolo'] ?? [];
+            $len   = min(count($nomi), count($ruoli));
+            $data[$s] = [];
+            for ($i = 0; $i < $len; $i++) {
+                if (trim($nomi[$i]) === '') continue;
+                $data[$s][] = ['nome'=>trim($nomi[$i]),'ruolo'=>trim($ruoli[$i])];
+            }
+        }
+        file_put_contents(STAFF_JSON, json_encode($data, JSON_PRETTY_PRINT|JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES));
+        $msg = 'Staff salvato!';
+    }
+
+    if ($_POST['action'] === 'save_statuto') {
+        $data = ['sede' => trim($_POST['sede'] ?? '')];
+        file_put_contents(STATUTO_JSON, json_encode($data, JSON_PRETTY_PRINT|JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES));
+        $msg = 'Statuto salvato!';
+    }
+}
+
+// ── Upload PDF ───────────────────────────────────────────────────────────────
+if (isset($_POST['action']) && $_POST['action'] === 'upload_modulo' && csrf_ok()) {
+    if (isset($_FILES['pdf_file']) && $_FILES['pdf_file']['error'] === UPLOAD_ERR_OK) {
+        $file = $_FILES['pdf_file'];
+        $ext  = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
+        $mime = mime_content_type($file['tmp_name']);
+        if ($ext === 'pdf' && $mime === 'application/pdf') {
+            if (move_uploaded_file($file['tmp_name'], MODULO_PATH)) {
+                $msg = 'Modulo di iscrizione aggiornato!';
+            } else {
+                $msg = 'Errore nel salvataggio. Verifica i permessi della cartella.';
+            }
+        } else {
+            $msg = 'File non valido. Carica solo un file PDF.';
+        }
+    } else {
+        $msg = 'Nessun file ricevuto o errore di upload.';
+    }
 }
 
 // ── Leggi JSON ───────────────────────────────────────────────────────────────
 $hp = json_decode(file_get_contents(HOMEPAGE_JSON), true) ?? [];
 $ct = json_decode(file_get_contents(CONTATTI_JSON), true) ?? [];
+$sf = json_decode(file_get_contents(STAFF_JSON),    true) ?? [];
+$st = json_decode(file_get_contents(STATUTO_JSON),  true) ?? [];
 
 function field($label, $name, $value, $type='textarea') {
     $v = htmlspecialchars($value ?? '');
@@ -142,7 +191,7 @@ function field($label, $name, $value, $type='textarea') {
 <!DOCTYPE html><html lang="it"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="robots" content="noindex,nofollow">
-<title>Asti Blu — Admin</title>
+<title>Asti Blu Admin</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:system-ui,sans-serif;background:#f0f4f8;color:#222}
@@ -151,8 +200,8 @@ header .brand{display:flex;align-items:center;gap:14px}
 header .brand img{width:48px;height:48px;border-radius:50%}
 header h1{font-size:1rem;line-height:1.4}
 header h1 span{display:block;font-size:.8rem;font-weight:400;color:#adc8e0}
-.tabs{display:flex;gap:0;border-bottom:2px solid #0a7cba;padding:0 32px;background:#fff}
-.tab{padding:12px 24px;cursor:pointer;font-size:.95rem;color:#555;border-bottom:3px solid transparent;margin-bottom:-2px}
+.tabs{display:flex;gap:0;border-bottom:2px solid #0a7cba;padding:0 32px;background:#fff;flex-wrap:wrap}
+.tab{padding:12px 20px;cursor:pointer;font-size:.9rem;color:#555;border-bottom:3px solid transparent;margin-bottom:-2px;white-space:nowrap}
 .tab.active{color:#0a7cba;border-bottom-color:#0a7cba;font-weight:600}
 .panel{display:none;padding:32px;max-width:860px}
 .panel.active{display:block}
@@ -164,16 +213,22 @@ input:focus,textarea:focus{outline:none;border-color:#0a7cba;box-shadow:0 0 0 3p
 .save-btn:hover{background:#085e8f}
 .msg{background:#d4edda;color:#155724;border:1px solid #c3e6cb;border-radius:7px;padding:12px 18px;margin-bottom:20px;font-size:.9rem}
 .section-title{font-size:1.1rem;font-weight:700;color:#0a2540;margin:28px 0 16px;border-bottom:1px solid #ddd;padding-bottom:8px}
+.section-title:first-child{margin-top:0}
 .list-row{display:grid;gap:10px;background:#f8fafc;border:1px solid #e0e7ef;border-radius:8px;padding:14px;margin-bottom:10px;position:relative}
 .list-row.istruttori-row{grid-template-columns:1fr 1fr 130px 36px}
 .list-row.infopoint-row{grid-template-columns:1fr 1fr 1fr 36px}
+.list-row.staff-row{grid-template-columns:1fr 1fr 36px}
 .del-btn{background:#e74c3c;color:#fff;border:none;border-radius:6px;cursor:pointer;font-size:1rem;align-self:end;height:38px}
 .del-btn:hover{background:#c0392b}
 .add-btn{background:#27ae60;color:#fff;border:none;border-radius:7px;padding:9px 18px;cursor:pointer;font-size:.9rem;margin-top:6px}
 .add-btn:hover{background:#219a52}
 .list-row input{margin:0}
 .list-row label{font-size:.75rem}
-@media(max-width:600px){.list-row.istruttori-row,.list-row.infopoint-row{grid-template-columns:1fr}}
+.upload-box{background:#f8fafc;border:2px dashed #b0c4de;border-radius:10px;padding:28px;text-align:center;margin-bottom:20px}
+.upload-box input[type=file]{margin-top:12px}
+.upload-box p{color:#555;font-size:.9rem;margin-bottom:8px}
+.modulo-info{background:#e8f0fe;border:1px solid #b0c4de;border-radius:7px;padding:12px 18px;font-size:.88rem;color:#2c3e50;margin-bottom:20px}
+@media(max-width:600px){.list-row.istruttori-row,.list-row.infopoint-row,.list-row.staff-row{grid-template-columns:1fr}}
 </style>
 </head><body>
 
@@ -190,6 +245,9 @@ input:focus,textarea:focus{outline:none;border-color:#0a7cba;box-shadow:0 0 0 3p
 <div class="tabs">
   <div class="tab active" onclick="showTab('homepage',this)">Homepage</div>
   <div class="tab" onclick="showTab('contatti',this)">Contatti</div>
+  <div class="tab" onclick="showTab('staff',this)">Staff</div>
+  <div class="tab" onclick="showTab('statuto',this)">Statuto</div>
+  <div class="tab" onclick="showTab('file',this)">File</div>
 </div>
 
 <?php if ($msg): ?>
@@ -210,6 +268,14 @@ field('Paragrafo 2','chi_siamo_2',$hp['chi_siamo_2']??'');
 <?php
 field('Introduzione corsi','corsi_intro',$hp['corsi_intro']??'');
 field('Periodo e sede','corsi_stagione',$hp['corsi_stagione']??'','text');
+?>
+<div class="section-title">Testi Card Carousel</div>
+<?php
+field('Card Apnea','apnea_testo',$hp['apnea_testo']??'');
+field('Card Subacquea','sub_testo',$hp['sub_testo']??'');
+field('Card Agonismo','agonismo_testo',$hp['agonismo_testo']??'');
+field('Card Specialità','spec_testo',$hp['spec_testo']??'');
+field('Card MiniSub','minisub_testo',$hp['minisub_testo']??'');
 ?>
 <div class="section-title">Allenamenti</div>
 <?php field('Testo card allenamenti','allenamenti_testo',$hp['allenamenti_testo']??''); ?>
@@ -265,6 +331,83 @@ field('Paragrafo 2','viaggi_2',$hp['viaggi_2']??'');
 </form>
 </div>
 
+<!-- ── STAFF ── -->
+<div class="panel" id="tab-staff">
+<form method="post">
+<input type="hidden" name="action" value="save_staff">
+<input type="hidden" name="csrf" value="<?= $_SESSION['csrf'] ?>">
+
+<div class="section-title">Staff ARA</div>
+<div id="ara-list">
+<?php foreach (($sf['ara']??[]) as $m): ?>
+<div class="list-row staff-row">
+  <div><label>Nome</label><input type="text" name="ara_nome[]" value="<?= htmlspecialchars($m['nome']) ?>"></div>
+  <div><label>Ruolo</label><input type="text" name="ara_ruolo[]" value="<?= htmlspecialchars($m['ruolo']) ?>"></div>
+  <button type="button" class="del-btn" onclick="this.parentElement.remove()">✕</button>
+</div>
+<?php endforeach ?>
+</div>
+<button type="button" class="add-btn" onclick="addStaff('ara')">+ Aggiungi</button>
+
+<div class="section-title">Staff Apnea</div>
+<div id="apnea-list">
+<?php foreach (($sf['apnea']??[]) as $m): ?>
+<div class="list-row staff-row">
+  <div><label>Nome</label><input type="text" name="apnea_nome[]" value="<?= htmlspecialchars($m['nome']) ?>"></div>
+  <div><label>Ruolo</label><input type="text" name="apnea_ruolo[]" value="<?= htmlspecialchars($m['ruolo']) ?>"></div>
+  <button type="button" class="del-btn" onclick="this.parentElement.remove()">✕</button>
+</div>
+<?php endforeach ?>
+</div>
+<button type="button" class="add-btn" onclick="addStaff('apnea')">+ Aggiungi</button>
+
+<div class="section-title">Staff MiniSub</div>
+<div id="minisub-list">
+<?php foreach (($sf['minisub']??[]) as $m): ?>
+<div class="list-row staff-row">
+  <div><label>Nome</label><input type="text" name="minisub_nome[]" value="<?= htmlspecialchars($m['nome']) ?>"></div>
+  <div><label>Ruolo</label><input type="text" name="minisub_ruolo[]" value="<?= htmlspecialchars($m['ruolo']) ?>"></div>
+  <button type="button" class="del-btn" onclick="this.parentElement.remove()">✕</button>
+</div>
+<?php endforeach ?>
+</div>
+<button type="button" class="add-btn" onclick="addStaff('minisub')">+ Aggiungi</button>
+
+<br><br>
+<button class="save-btn" type="submit">Salva Staff</button>
+</form>
+</div>
+
+<!-- ── STATUTO ── -->
+<div class="panel" id="tab-statuto">
+<form method="post">
+<input type="hidden" name="action" value="save_statuto">
+<input type="hidden" name="csrf" value="<?= $_SESSION['csrf'] ?>">
+<div class="section-title">Dati Statuto</div>
+<?php field('Sede legale (es. Asti, via Via al Mulino n. 24)','sede',$st['sede']??'','text'); ?>
+<p style="font-size:.82rem;color:#666;margin-bottom:18px">Il testo completo dello statuto è hardcoded nella pagina <code>html/statuto.html</code>. Per modifiche sostanziali contattare il developer.</p>
+<button class="save-btn" type="submit">Salva Statuto</button>
+</form>
+</div>
+
+<!-- ── FILE ── -->
+<div class="panel" id="tab-file">
+<form method="post" enctype="multipart/form-data">
+<input type="hidden" name="action" value="upload_modulo">
+<input type="hidden" name="csrf" value="<?= $_SESSION['csrf'] ?>">
+<div class="section-title">Modulo di Iscrizione</div>
+<div class="modulo-info">
+  File attuale: <strong>modulo-iscrizione.pdf</strong><br>
+  Caricando un nuovo file, il precedente viene sostituito. Il link sul sito punterà sempre allo stesso percorso.
+</div>
+<div class="upload-box">
+  <p>Seleziona il nuovo PDF del modulo di iscrizione</p>
+  <input type="file" name="pdf_file" accept="application/pdf,.pdf">
+</div>
+<button class="save-btn" type="submit">Carica PDF</button>
+</form>
+</div>
+
 <script>
 function showTab(id, el) {
   document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
@@ -289,6 +432,14 @@ function addInfopoint() {
     <button type="button" class="del-btn" onclick="this.parentElement.remove()">✕</button>
   </div>`;
   document.getElementById('infopoint-list').insertAdjacentHTML('beforeend', row);
+}
+function addStaff(section) {
+  const row = `<div class="list-row staff-row">
+    <div><label>Nome</label><input type="text" name="${section}_nome[]" value=""></div>
+    <div><label>Ruolo</label><input type="text" name="${section}_ruolo[]" value=""></div>
+    <button type="button" class="del-btn" onclick="this.parentElement.remove()">✕</button>
+  </div>`;
+  document.getElementById(section+'-list').insertAdjacentHTML('beforeend', row);
 }
 </script>
 </body></html>

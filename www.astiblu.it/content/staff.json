@@ -1,0 +1,35 @@
+{
+  "ara": [
+    {"nome": "Andrea Caldera", "ruolo": "Istruttore"},
+    {"nome": "Angelo Gozzelino", "ruolo": "Istruttore"},
+    {"nome": "Bruno Porro", "ruolo": "Istruttore"},
+    {"nome": "Claudio Massa", "ruolo": "Istruttore"},
+    {"nome": "Daniele Cipollone", "ruolo": "Istruttore"},
+    {"nome": "Daniele Sansoldo", "ruolo": "Istruttore"},
+    {"nome": "Deborah Speretta", "ruolo": "Istruttore"},
+    {"nome": "Fabio Macagno", "ruolo": "Istruttore"},
+    {"nome": "Federico Serra", "ruolo": "Aiuto Istruttore"},
+    {"nome": "Francesco Parisi", "ruolo": "Istruttore"},
+    {"nome": "Guglielmo Marchiò", "ruolo": "Istruttore"},
+    {"nome": "Luca Figundio", "ruolo": "Istruttore"},
+    {"nome": "Luciano Milanese", "ruolo": "Istruttore"},
+    {"nome": "Mauro Formiconi", "ruolo": "Istruttore"},
+    {"nome": "Michele Mazzetta", "ruolo": "Aiuto Istruttore"}
+  ],
+  "apnea": [
+    {"nome": "Alessandro Iannuzzi", "ruolo": "Istruttore"},
+    {"nome": "Enzo Perrone", "ruolo": "Istruttore"},
+    {"nome": "Fabio Amerio", "ruolo": "Istruttore"},
+    {"nome": "Giorgio Bestente", "ruolo": "Istruttore"},
+    {"nome": "Luigi Franco", "ruolo": "Istruttore"},
+    {"nome": "Maurizio Santero", "ruolo": "Istruttore"},
+    {"nome": "Mirko Tondi", "ruolo": "Istruttore"},
+    {"nome": "Paolo Zappa", "ruolo": "Istruttore"}
+  ],
+  "minisub": [
+    {"nome": "Bruno Iuorio", "ruolo": "Istruttore"},
+    {"nome": "Deborah Speretta", "ruolo": "Istruttore"},
+    {"nome": "Letizia Franco", "ruolo": "Aiuto Istruttore"},
+    {"nome": "Luca Figundio", "ruolo": "Istruttore"}
+  ]
+}
