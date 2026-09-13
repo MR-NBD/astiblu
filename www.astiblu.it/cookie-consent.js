@@ -35,44 +35,35 @@
   function injectStyles() {
     var s = document.createElement('style');
     s.textContent = [
-      '@keyframes ab-slidein{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}',
+      '@keyframes ab-slidein{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}',
       '#ab-cookie{',
-        'position:fixed;bottom:1.5rem;left:1.5rem;z-index:99999;',
-        'background:#fff;color:#1a1a2e;',
-        'width:280px;border-radius:16px;',
-        'box-shadow:0 8px 32px rgba(0,0,0,.18),0 2px 8px rgba(49,107,255,.10);',
-        'font-family:Inter,sans-serif;font-size:.875rem;line-height:1.5;',
-        'animation:ab-slidein .35s cubic-bezier(.4,0,.2,1);',
-        'overflow:hidden;',
+        'position:fixed;bottom:1.25rem;left:1.25rem;z-index:99999;',
+        'background:rgba(20,20,30,.92);color:#e8e8f0;',
+        'backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);',
+        'border-radius:10px;padding:.6rem 1rem;',
+        'display:flex;align-items:center;gap:.75rem;flex-wrap:wrap;',
+        'font-family:Inter,sans-serif;font-size:.78rem;line-height:1.4;',
+        'box-shadow:0 4px 20px rgba(0,0,0,.35);',
+        'animation:ab-slidein .3s ease;max-width:480px;',
       '}',
-      '#ab-cookie-head{',
-        'background:#316bff;padding:.75rem 1rem;',
-        'display:flex;align-items:center;gap:.5rem;',
-      '}',
-      '#ab-cookie-head span{font-size:1.1rem}',
-      '#ab-cookie-head strong{color:#fff;font-size:.9rem;letter-spacing:.02em}',
-      '#ab-cookie-body{padding:1rem}',
-      '#ab-cookie-body p{margin:0 0 1rem;color:#444;font-size:.82rem;line-height:1.55}',
-      '#ab-cookie-body a{color:#316bff;text-decoration:none;font-size:.78rem}',
-      '#ab-cookie-body a:hover{text-decoration:underline}',
-      '#ab-cookie-btns{display:flex;gap:.5rem;margin-bottom:.75rem}',
+      '#ab-cookie p{margin:0;flex:1;min-width:160px;}',
+      '#ab-cookie a{color:#7eb3ff;text-decoration:none;}',
+      '#ab-cookie a:hover{text-decoration:underline;}',
+      '#ab-cookie-btns{display:flex;gap:.4rem;flex-shrink:0;}',
       '#ab-reject{',
-        'flex:1;background:#f0f2f5;border:none;color:#555;',
-        'padding:.5rem;border-radius:8px;cursor:pointer;',
-        'font-size:.82rem;font-weight:500;transition:background .2s;',
+        'background:transparent;border:1px solid rgba(255,255,255,.25);color:#ccc;',
+        'padding:.3rem .75rem;border-radius:6px;cursor:pointer;font-size:.75rem;',
+        'transition:border-color .2s,color .2s;white-space:nowrap;',
       '}',
-      '#ab-reject:hover{background:#e2e5eb;color:#222}',
+      '#ab-reject:hover{border-color:#fff;color:#fff;}',
       '#ab-accept{',
-        'flex:1;background:#316bff;border:none;color:#fff;',
-        'padding:.5rem;border-radius:8px;cursor:pointer;',
-        'font-size:.82rem;font-weight:700;transition:background .2s;',
+        'background:#316bff;border:none;color:#fff;',
+        'padding:.3rem .75rem;border-radius:6px;cursor:pointer;font-size:.75rem;font-weight:600;',
+        'transition:background .2s;white-space:nowrap;',
       '}',
-      '#ab-accept:hover{background:#2558e0}',
+      '#ab-accept:hover{background:#2558e0;}',
       '@media(max-width:600px){',
-        '#ab-cookie{',
-          'left:1rem;right:1rem;bottom:1rem;',
-          'width:auto;',
-        '}',
+        '#ab-cookie{left:.75rem;right:.75rem;bottom:.75rem;max-width:none;}',
       '}',
     ].join('');
     document.head.appendChild(s);
@@ -85,14 +76,10 @@
     b.setAttribute('role', 'dialog');
     b.setAttribute('aria-label', 'Consenso cookie');
     b.innerHTML =
-      '<div id="ab-cookie-head"><span>🍪</span><strong>Cookie & Privacy</strong></div>' +
-      '<div id="ab-cookie-body">' +
-        '<p>Usiamo <strong>Google Analytics</strong> per statistiche anonime. Nessun tracciamento pubblicitario.</p>' +
-        '<div id="ab-cookie-btns">' +
-          '<button id="ab-reject">Rifiuta</button>' +
-          '<button id="ab-accept">Accetta</button>' +
-        '</div>' +
-        '<a href="/html/policy.html">Privacy policy</a>' +
+      '<p>Usiamo cookie analitici anonimi. <a href="/html/policy.html">Privacy policy</a></p>' +
+      '<div id="ab-cookie-btns">' +
+        '<button id="ab-reject">Rifiuta</button>' +
+        '<button id="ab-accept">Accetta</button>' +
       '</div>';
     document.body.appendChild(b);
     document.getElementById('ab-accept').addEventListener('click', accept);
