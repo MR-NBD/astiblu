@@ -23,7 +23,3 @@
 
 Ogni push su `main` avvia il deploy automatico via FTP su Aruba.  
 I file sensibili (`contact-config.php`, `.htpasswd`, `oauth.php`) non vengono mai committati.
-
-## Admin
-
-Pannello di gestione testi disponibile su `/admin/` (accesso con password).
