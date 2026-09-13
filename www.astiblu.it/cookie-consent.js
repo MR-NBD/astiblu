@@ -37,7 +37,7 @@
     s.textContent = [
       '@keyframes ab-slidein{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}',
       '#ab-cookie{',
-        'position:fixed;bottom:1.5rem;right:1.5rem;z-index:99999;',
+        'position:fixed;bottom:1.5rem;left:1.5rem;z-index:99999;',
         'background:#fff;color:#1a1a2e;',
         'width:280px;border-radius:16px;',
         'box-shadow:0 8px 32px rgba(0,0,0,.18),0 2px 8px rgba(49,107,255,.10);',
