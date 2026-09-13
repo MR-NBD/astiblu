@@ -14,7 +14,7 @@
 ## Stack
 
 - HTML / CSS / JavaScript statico
-- PHP — form contatti (reCAPTCHA v3) + pannello admin
+- PHP - form contatti (reCAPTCHA v3) + pannello admin
 - Apache `.htaccess` - HTTPS, sicurezza, caching
 - JSON - contenuti gestibili dal pannello admin
 - GitHub Actions → FTP deploy automatico su Aruba
